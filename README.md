@@ -1,5 +1,5 @@
 # gromacs_automation
-Under development.
+Under development - for small-molecule organic semicondutors
 
 Requirements:
 ocelot api ["https://github.com/caer200/ocelot_api"]
