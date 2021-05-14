@@ -59,6 +59,7 @@ def make_gro(location,code_name):
     # close the files
     periodic_file.close()
     molecule_file.close()
+    mols[0].pmgmol.to(fmt="xyz",filename="{}_mol.xyz".format(code_name))
 
 if __name__ == "__main__":
     location = sys.argv[1]
