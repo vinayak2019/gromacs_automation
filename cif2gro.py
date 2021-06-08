@@ -43,7 +43,7 @@ def make_gro(location,code_name):
             coord_string = "{}{}{}".format(format(site.coords[0] /10,"8.3f"), format(site.coords[1]/10,"8.3f"), format(site.coords[2]/10,"8.3f"))
             res_name = str(mol_idx + 1) + code_name
             atom_number = str(atoms_counter)
-            site_string = "{0:>10s}{1:>5s}{2:>5s}{3}".format(res_name, element_name, atom_number, coord_string)
+            site_string = "{0:>8s}{1:>5s}{2:>5s}{3}".format(res_name, element_name, atom_number, coord_string)
             print(site_string,file=periodic_file)
             if mol_idx == 0:
                 print(site_string, file=molecule_file)
