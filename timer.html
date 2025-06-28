@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Countdown Timer (Seconds)</title>
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      background-color: #000;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: Arial, sans-serif;
+      color: #fff;
+    }
+    .controls {
+      text-align: center;
+    }
+    .controls input,
+    .controls button {
+      padding: 0.5rem;
+      font-size: 1.25rem;
+      margin: 0.25rem;
+      border: 1px solid #555;
+      border-radius: 4px;
+      background-color: #222;
+      color: #fff;
+      text-align: center;
+    }
+    .controls input {
+      width: 6rem;
+    }
+    .controls button:hover {
+      background-color: #444;
+      cursor: pointer;
+    }
+    #timer {
+      display: none;
+      text-align: center;
+    }
+    /* Large number, smaller unit */
+    #timer .number {
+      font-size: 8rem;
+    }
+    #timer .unit {
+      font-size: 3rem;
+      margin-left: 0.5rem;
+      vertical-align: middle;
+    }
+  </style>
+</head>
+<body>
+  <div>
+    <div class="controls" id="controls">
+      <input type="number" id="seconds" placeholder="Seconds" min="0">
+      <button id="startBtn">Start Timer</button>
+    </div>
+    <div id="timer"><span class="number">0</span><span class="unit">s</span></div>
+  </div>
+
+  <script>
+    const startBtn = document.getElementById('startBtn');
+    const controls = document.getElementById('controls');
+    const timerEl = document.getElementById('timer');
+    let countdownInterval;
+
+    function displayTime(sec) {
+      timerEl.innerHTML = `<span class="number">${sec}</span><span class="unit">s</span>`;
+    }
+
+    startBtn.addEventListener('click', () => {
+      const secsVal = parseInt(document.getElementById('seconds').value) || 0;
+      let remaining = secsVal;
+      if (remaining <= 0) {
+        alert('Please set a time greater than 0.');
+        return;
+      }
+      controls.style.display = 'none';
+      timerEl.style.display = 'block';
+      displayTime(remaining);
+      const endTime = Date.now() + remaining * 1000;
+      clearInterval(countdownInterval);
+      countdownInterval = setInterval(() => {
+        const msLeft = endTime - Date.now();
+        const secLeft = Math.ceil(msLeft / 1000);
+        if (secLeft <= 0) {
+          clearInterval(countdownInterval);
+          displayTime(0);
+        } else {
+          displayTime(secLeft);
+        }
+      }, 200);
+    });
+  </script>
+</body>
+</html>
