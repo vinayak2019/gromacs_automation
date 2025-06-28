@@ -52,27 +52,9 @@
       margin-left: 0.5rem;
       vertical-align: middle;
     }
-    /* Fullscreen button */
-    #fullscreenBtn {
-      position: absolute;
-      top: 1rem;
-      right: 1rem;
-      background-color: #222;
-      color: #fff;
-      border: 1px solid #555;
-      padding: 0.5rem;
-      font-size: 1rem;
-      border-radius: 4px;
-      cursor: pointer;
-      z-index: 10;
-    }
-    #fullscreenBtn:hover {
-      background-color: #444;
-    }
   </style>
 </head>
 <body>
-  <button id="fullscreenBtn">Enter Fullscreen</button>
   <div>
     <div class="controls" id="controls">
       <input type="number" id="seconds" placeholder="Seconds" min="0">
@@ -83,27 +65,24 @@
 
   <script>
     const startBtn = document.getElementById('startBtn');
-    const fullscreenBtn = document.getElementById('fullscreenBtn');
     const controls = document.getElementById('controls');
     const timerEl = document.getElementById('timer');
     let countdownInterval;
-
-    // Fullscreen toggle
-    fullscreenBtn.addEventListener('click', () => {
-      if (!document.fullscreenElement) {
-        document.documentElement.requestFullscreen();
-        fullscreenBtn.textContent = 'Exit Fullscreen';
-      } else if (document.exitFullscreen) {
-        document.exitFullscreen();
-        fullscreenBtn.textContent = 'Enter Fullscreen';
-      }
-    });
 
     function displayTime(sec) {
       timerEl.innerHTML = `<span class="number">${sec}</span><span class="unit">s</span>`;
     }
 
     startBtn.addEventListener('click', () => {
+      // Auto-enter fullscreen on start
+      if (document.documentElement.requestFullscreen) {
+        document.documentElement.requestFullscreen();
+      } else if (document.documentElement.webkitRequestFullscreen) {
+        document.documentElement.webkitRequestFullscreen();
+      } else if (document.documentElement.mozRequestFullScreen) {
+        document.documentElement.mozRequestFullScreen();
+      }
+
       const secsVal = parseInt(document.getElementById('seconds').value) || 0;
       let remaining = secsVal;
       if (remaining <= 0) {
